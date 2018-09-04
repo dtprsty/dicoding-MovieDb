@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MovieDb</string>
+    <string name="cari">Cari</string>
+    <string name="release_date">Tanggal Rilis</string>
+    <string name="back">Kembali</string>
+    <string name="search_movie">Cari Film</string>
+    <string name="setting">Pengaturan</string>
+    <string name="upcoming">Mendatang</string>
+    <string name="nowplaying">Sedang Diputar</string>
+    <string name="fillkeyword">Isikan kata kunci pencarian</string>
+    <string name="moviedetail">Detail Film</string>
+    <string name="search_hint">Masukkan kata</string>
+</resources>
