@@ -1,6 +1,13 @@
 package com.example.prasetyo.moviedb.model;
 
-public class Movie {
+import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import static com.example.prasetyo.moviedb.database.DatabaseConstruct.getColumnString;
+import com.example.prasetyo.moviedb.database.DatabaseConstruct.FavColumns;
+
+public class Movie implements Parcelable{
 
     private String title;
     private String date;
@@ -8,6 +15,39 @@ public class Movie {
     private String overview;
     private String banner;
     private String rating;
+    private String voter;
+
+    protected Movie(Parcel in) {
+        title = in.readString();
+        date = in.readString();
+        poster = in.readString();
+        overview = in.readString();
+        banner = in.readString();
+        rating = in.readString();
+        voter = in.readString();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    public Movie(Cursor cursor){
+        this.title = getColumnString(cursor, FavColumns.getTitle());
+        this.date = getColumnString(cursor, FavColumns.getDate());
+        this.overview= getColumnString(cursor, FavColumns.getOverview());
+        this.banner= getColumnString(cursor, FavColumns.getBanner());
+        this.poster= getColumnString(cursor, FavColumns.getPoster());
+        this.rating= getColumnString(cursor, FavColumns.getRating());
+        this.voter= getColumnString(cursor, FavColumns.getVoter());
+    }
 
     public String getBanner() {
         return banner;
@@ -32,8 +72,6 @@ public class Movie {
     public void setVoter(String voter) {
         this.voter = voter;
     }
-
-    private String voter;
 
     public String getTitle() {
         return title;
@@ -67,4 +105,17 @@ public class Movie {
         this.poster = poster;
     }
 
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(date);
+        dest.writeString(banner);
+        dest.writeString(poster);
+        dest.writeString(rating);
+        dest.writeString(voter);
+        dest.writeString(overview);
+    }
 }

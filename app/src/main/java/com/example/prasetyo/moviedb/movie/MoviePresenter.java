@@ -8,7 +8,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.prasetyo.moviedb.api.ApiEndPoint;
 import com.example.prasetyo.moviedb.model.Movie;
-import com.example.prasetyo.moviedb.search.SearchActivity;
+import com.example.prasetyo.moviedb.ui.search.SearchActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

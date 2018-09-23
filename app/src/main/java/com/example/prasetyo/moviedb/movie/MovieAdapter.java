@@ -5,9 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.androidnetworking.widget.ANImageView;
+import com.bumptech.glide.Glide;
 import com.example.prasetyo.moviedb.R;
 import com.example.prasetyo.moviedb.model.Movie;
 
@@ -36,7 +37,7 @@ public class MovieAdapter extends
         @BindView(R.id.txOverview)
         TextView txOverview;
         @BindView(R.id.imgPoster)
-        ANImageView moviePoster;
+        ImageView moviePoster;
 
 
         public ViewHolder(View v) {
@@ -61,7 +62,9 @@ public class MovieAdapter extends
         holder.txTitle.setText(list.get(position).getTitle());
         holder.txOverview.setText(list.get(position).getOverview());
         holder.txDate.setText(list.get(position).getDate());
-        holder.moviePoster.setImageUrl(list.get(position).getPoster());
+        Glide.with(context)
+                .load(list.get(position).getPoster())
+                .into(holder.moviePoster);
     }
 
 

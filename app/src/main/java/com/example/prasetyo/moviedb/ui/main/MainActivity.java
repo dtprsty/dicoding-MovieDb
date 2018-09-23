@@ -1,4 +1,4 @@
-package com.example.prasetyo.moviedb.main;
+package com.example.prasetyo.moviedb.ui.main;
 
 import android.Manifest;
 import android.content.DialogInterface;

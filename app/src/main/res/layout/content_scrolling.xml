@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.prasetyo.moviedb.detail.DetailMovieActivity"
+    tools:context=".ui.detail.DetailMovieActivity"
     tools:showIn="@layout/activity_detail_movie">
 
     <TextView

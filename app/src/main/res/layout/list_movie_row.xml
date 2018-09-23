@@ -5,7 +5,7 @@
     android:padding="@dimen/vertical_margin"
     android:orientation="horizontal">
 
-    <com.androidnetworking.widget.ANImageView
+    <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/imgPoster" />

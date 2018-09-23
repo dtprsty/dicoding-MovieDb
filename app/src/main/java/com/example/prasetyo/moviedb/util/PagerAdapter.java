@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.prasetyo.moviedb.nowPlaying.NowPlayingFragment;
-import com.example.prasetyo.moviedb.upcoming.UpcomingFragment;
+import com.example.prasetyo.moviedb.ui.nowPlaying.NowPlayingFragment;
+import com.example.prasetyo.moviedb.ui.upcoming.UpcomingFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     private int mNumOfTabs;

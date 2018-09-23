@@ -5,8 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.androidnetworking.widget.ANImageView;
+import com.bumptech.glide.Glide;
 import com.example.prasetyo.moviedb.R;
 import com.example.prasetyo.moviedb.model.Movie;
 
@@ -31,7 +32,7 @@ public class GridAdapter extends
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.imgPoster)
-        ANImageView moviePoster;
+        ImageView moviePoster;
 
 
         public ViewHolder(View v) {
@@ -51,7 +52,9 @@ public class GridAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.moviePoster.setImageUrl(list.get(position).getPoster());
+        Glide.with(context)
+                .load(list.get(position).getPoster())
+                .into(holder.moviePoster);
     }
 
 

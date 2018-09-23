@@ -1,18 +1,19 @@
-package com.example.prasetyo.moviedb.detail;
+package com.example.prasetyo.moviedb.ui.detail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.androidnetworking.widget.ANImageView;
+import com.bumptech.glide.Glide;
 import com.example.prasetyo.moviedb.R;
-import com.example.prasetyo.moviedb.main.MainActivity;
+import com.example.prasetyo.moviedb.ui.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class DetailMovieActivity extends AppCompatActivity {
 
@@ -35,9 +36,12 @@ public class DetailMovieActivity extends AppCompatActivity {
     @BindView(R.id.txOverview)
     TextView txOverview;
     @BindView(R.id.imgPoster)
-    ANImageView imgPoster;
+    ImageView imgPoster;
     @BindView(R.id.img_banner)
-    ANImageView imgBanner;
+    ImageView imgBanner;
+
+    private boolean isFavorite = false;
+    private Menu menu;
 
 
     @Override
@@ -45,6 +49,13 @@ public class DetailMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
 
+        init();
+
+    }
+
+    private void init() {
+
+        ButterKnife.bind(this);
         String title = getIntent().getStringExtra(EXTRA_TITLE);
         String date = getIntent().getStringExtra(EXTRA_DATE);
         String overview = getIntent().getStringExtra(EXTRA_OVERVIEW);
@@ -53,21 +64,48 @@ public class DetailMovieActivity extends AppCompatActivity {
         String voter = getIntent().getStringExtra(EXTRA_VOTER);
         String banner = getIntent().getStringExtra(EXTRA_BANNER);
 
-        init();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         txTitle.setText(title);
         txRating.setText(rating);
         txVotes.setText(voter);
         txDate.setText(date);
         txOverview.setText(overview);
-        imgPoster.setImageUrl(poster);
-        imgBanner.setImageUrl(banner);
+        Glide.with(this)
+                .load(banner)
+                .into(imgBanner);
+        Glide.with(this)
+                .load(poster)
+                .into(imgPoster);
+
     }
 
-    private void init() {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.detail_menu, menu);
+        this.menu = menu;
+        setFavorite();
+        return super.onCreateOptionsMenu(menu);
+    }
 
-        ButterKnife.bind(this);
+    private void setFavorite(){
+        if (isFavorite) {
+            menu.getItem(0).setIcon(R.drawable.ic_added_to_fav);
+        }else {
+            menu.getItem(0).setIcon(R.drawable.ic_add_to_fav);
+        }
+    }
 
-        setTitle(getString(R.string.moviedetail));
-
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
