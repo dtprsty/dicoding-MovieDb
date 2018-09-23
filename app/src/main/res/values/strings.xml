@@ -10,5 +10,7 @@
     <string name="fillkeyword">Fill the search keyword</string>
     <string name="moviedetail">Movie Detail</string>
     <string name="search_hint">Keyword</string>
+    <string name="rating">Rating</string>
+    <string name="voter">Voter</string>
 
 </resources>

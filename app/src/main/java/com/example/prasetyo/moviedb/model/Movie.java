@@ -6,6 +6,34 @@ public class Movie {
     private String date;
     private String poster;
     private String overview;
+    private String banner;
+    private String rating;
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getVoter() {
+        return voter;
+    }
+
+    public void setVoter(String voter) {
+        this.voter = voter;
+    }
+
+    private String voter;
 
     public String getTitle() {
         return title;

@@ -145,6 +145,9 @@ public class UpcomingFragment extends Fragment implements MovieView {
                         i.putExtra(DetailMovieActivity.EXTRA_DATE, m.getDate());
                         i.putExtra(DetailMovieActivity.EXTRA_OVERVIEW, m.getOverview());
                         i.putExtra(DetailMovieActivity.EXTRA_POSTER, m.getPoster());
+                        i.putExtra(DetailMovieActivity.EXTRA_BANNER, m.getBanner());
+                        i.putExtra(DetailMovieActivity.EXTRA_RATING, m.getRating());
+                        i.putExtra(DetailMovieActivity.EXTRA_VOTER, m.getVoter());
                         startActivity(i);
                     }
                 })

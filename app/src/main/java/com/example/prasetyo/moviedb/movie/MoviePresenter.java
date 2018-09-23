@@ -58,7 +58,10 @@ public class MoviePresenter {
                                 movie.setTitle(jsonObject.getString("original_title"));
                                 movie.setOverview(jsonObject.getString("overview"));
                                 movie.setDate(parseDate(jsonObject.getString("release_date")));
+                                movie.setRating(jsonObject.getString("vote_average"));
+                                movie.setVoter(jsonObject.getString("vote_count"));
                                 movie.setPoster("http://image.tmdb.org/t/p/w185" + jsonObject.getString("poster_path"));
+                                movie.setBanner("http://image.tmdb.org/t/p/original" + jsonObject.getString("backdrop_path"));
 
                                 data.add(movie);
 
@@ -112,7 +115,10 @@ public class MoviePresenter {
                                 movie.setTitle(jsonObject.getString("original_title"));
                                 movie.setOverview(jsonObject.getString("overview"));
                                 movie.setDate(parseDate(jsonObject.getString("release_date")));
+                                movie.setRating(jsonObject.getString("vote_average"));
+                                movie.setVoter(jsonObject.getString("vote_count"));
                                 movie.setPoster("http://image.tmdb.org/t/p/w185" + jsonObject.getString("poster_path"));
+                                movie.setBanner("http://image.tmdb.org/t/p/original" + jsonObject.getString("backdrop_path"));
 
                                 data.add(movie);
 
@@ -166,7 +172,10 @@ public class MoviePresenter {
                                 movie.setTitle(jsonObject.getString("original_title"));
                                 movie.setOverview(jsonObject.getString("overview"));
                                 movie.setDate(parseDate(jsonObject.getString("release_date")));
+                                movie.setRating(jsonObject.getString("vote_average"));
+                                movie.setVoter(jsonObject.getString("vote_count"));
                                 movie.setPoster("http://image.tmdb.org/t/p/w185" + jsonObject.getString("poster_path"));
+                                movie.setBanner("http://image.tmdb.org/t/p/original" + jsonObject.getString("backdrop_path"));
 
                                 data.add(movie);
 
