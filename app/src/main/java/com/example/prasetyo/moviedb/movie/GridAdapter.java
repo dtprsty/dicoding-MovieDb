@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.prasetyo.moviedb.R;
@@ -33,7 +34,10 @@ public class GridAdapter extends
 
         @BindView(R.id.imgPoster)
         ImageView moviePoster;
-
+        @BindView(R.id.txTitle)
+        TextView txTitle;
+        @BindView(R.id.txDate)
+        TextView txDate;
 
         public ViewHolder(View v) {
             super(v);
@@ -52,6 +56,8 @@ public class GridAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.txTitle.setText(list.get(position).getTitle());
+        holder.txDate.setText(list.get(position).getDate());
         Glide.with(context)
                 .load(list.get(position).getPoster())
                 .into(holder.moviePoster);

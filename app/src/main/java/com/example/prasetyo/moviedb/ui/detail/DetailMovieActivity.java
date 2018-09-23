@@ -1,6 +1,10 @@
 package com.example.prasetyo.moviedb.ui.detail;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,20 +14,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.prasetyo.moviedb.R;
-import com.example.prasetyo.moviedb.ui.main.MainActivity;
+import com.example.prasetyo.moviedb.database.FavMovieHelper;
+import com.example.prasetyo.moviedb.model.Movie;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailMovieActivity extends AppCompatActivity {
 
-    public static String EXTRA_TITLE = "extra_title";
-    public static String EXTRA_DATE = "extra_date";
-    public static String EXTRA_OVERVIEW = "extra_overview";
-    public static String EXTRA_POSTER = "extra_poster";
-    public static String EXTRA_BANNER = "extra_banner";
-    public static String EXTRA_RATING = "extra_rating";
-    public static String EXTRA_VOTER = "extra_voter";
+    public static String EXTRA_MOVIE = "extra_movie";
 
     @BindView(R.id.txTitle)
     TextView txTitle;
@@ -39,10 +39,13 @@ public class DetailMovieActivity extends AppCompatActivity {
     ImageView imgPoster;
     @BindView(R.id.img_banner)
     ImageView imgBanner;
+    @BindView(R.id.rootView)
+    CoordinatorLayout root;
 
     private boolean isFavorite = false;
     private Menu menu;
-
+    private Movie movie;
+    private FavMovieHelper favMovieHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,35 +59,52 @@ public class DetailMovieActivity extends AppCompatActivity {
     private void init() {
 
         ButterKnife.bind(this);
-        String title = getIntent().getStringExtra(EXTRA_TITLE);
-        String date = getIntent().getStringExtra(EXTRA_DATE);
-        String overview = getIntent().getStringExtra(EXTRA_OVERVIEW);
-        String poster = getIntent().getStringExtra(EXTRA_POSTER);
-        String rating = getIntent().getStringExtra(EXTRA_RATING);
-        String voter = getIntent().getStringExtra(EXTRA_VOTER);
-        String banner = getIntent().getStringExtra(EXTRA_BANNER);
+        Uri uri = getIntent().getData();
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        favMovieHelper = new FavMovieHelper(this);
+        favMovieHelper.open();
+
+        if (uri != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                movie = new Movie(cursor);
+                cursor.close();
+            } else {
+                onBackPressed();
+                finish();
+            }
+        } else {
+            movie = new Gson().fromJson(getIntent().getStringExtra(EXTRA_MOVIE), Movie.class);
         }
 
-        txTitle.setText(title);
-        txRating.setText(rating);
-        txVotes.setText(voter);
-        txDate.setText(date);
-        txOverview.setText(overview);
-        Glide.with(this)
-                .load(banner)
-                .into(imgBanner);
-        Glide.with(this)
-                .load(poster)
-                .into(imgPoster);
+        favoriteState();
+
+        loadMovieDetail(movie);
 
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    private void loadMovieDetail(Movie movie) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(movie.getTitle());
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        txTitle.setText(movie.getTitle());
+        txRating.setText(movie.getRating());
+        txVotes.setText(movie.getVoter());
+        txDate.setText(movie.getDate());
+        txOverview.setText(movie.getOverview());
+        Glide.with(this)
+                .load(movie.getBanner())
+                .into(imgBanner);
+        Glide.with(this)
+                .load(movie.getPoster())
+                .into(imgPoster);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.detail_menu, menu);
         this.menu = menu;
@@ -92,19 +112,65 @@ public class DetailMovieActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void setFavorite(){
+    private void favoriteState() {
+        int favCount = favMovieHelper.queryByIdProvider(
+                String.valueOf(movie.getId())).getCount();
+
+        if (favCount > 0) {
+            isFavorite = true;
+        } else {
+            isFavorite = false;
+        }
+    }
+
+    private void addToFav() {
+
+        int favCount = favMovieHelper.queryByIdProvider(
+                String.valueOf(movie.getId())).getCount();
+        if (favCount > 0) {
+            favMovieHelper.updateProvider(String.valueOf(movie.getId()), movie);
+        } else {
+            favMovieHelper.insert(movie);
+        }
+        Snackbar snackbar = Snackbar
+                .make(root, "Added To Favorite", Snackbar.LENGTH_LONG);
+        snackbar.show();
+        menu.getItem(0).setIcon(R.drawable.ic_added_to_fav);
+        isFavorite = true;
+
+    }
+
+    private void removeFromFav() {
+        favMovieHelper.delete(String.valueOf(movie.getId()));
+        Snackbar snackbar = Snackbar
+                .make(root, "Removed from Favorite", Snackbar.LENGTH_LONG);
+        snackbar.show();
+        menu.getItem(0).setIcon(R.drawable.ic_add_to_fav);
+        isFavorite = false;
+    }
+
+    private void setFavorite() {
         if (isFavorite) {
             menu.getItem(0).setIcon(R.drawable.ic_added_to_fav);
-        }else {
+        } else {
             menu.getItem(0).setIcon(R.drawable.ic_add_to_fav);
         }
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                return true;
+                break;
+
+            case R.id.add_to_favorite:
+                if (!isFavorite) {
+                    addToFav();
+                } else {
+                    removeFromFav();
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -56,6 +56,7 @@ public class MoviePresenter {
                                 Movie movie = new Movie();
 
                                 movie.setTitle(jsonObject.getString("original_title"));
+                                movie.setId(jsonObject.getString("id"));
                                 movie.setOverview(jsonObject.getString("overview"));
                                 movie.setDate(parseDate(jsonObject.getString("release_date")));
                                 movie.setRating(jsonObject.getString("vote_average"));
@@ -112,6 +113,7 @@ public class MoviePresenter {
 
                                 Movie movie = new Movie();
 
+                                movie.setId(jsonObject.getString("id"));
                                 movie.setTitle(jsonObject.getString("original_title"));
                                 movie.setOverview(jsonObject.getString("overview"));
                                 movie.setDate(parseDate(jsonObject.getString("release_date")));
@@ -169,6 +171,7 @@ public class MoviePresenter {
 
                                 Movie movie = new Movie();
 
+                                movie.setId(jsonObject.getString("id"));
                                 movie.setTitle(jsonObject.getString("original_title"));
                                 movie.setOverview(jsonObject.getString("overview"));
                                 movie.setDate(parseDate(jsonObject.getString("release_date")));

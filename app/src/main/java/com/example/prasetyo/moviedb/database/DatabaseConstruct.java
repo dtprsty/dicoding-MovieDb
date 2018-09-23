@@ -15,6 +15,12 @@ public class DatabaseConstruct {
     public static final class FavColumns implements BaseColumns {
 
         private static final String title = "title";
+        private static final String id = "id";
+
+        public static String getId() {
+            return id;
+        }
+
         private static final String date = "date";
         private static final String poster = "poster";
         private static final String overview = "overview";
@@ -60,7 +66,7 @@ public class DatabaseConstruct {
 
     public static String createTable() {
         return "CREATE TABLE " + TABLE_FAVORITES + " (" +
-                FavColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                FavColumns.getId() + " TEXT PRIMARY KEY," +
                 FavColumns.getTitle() + " TEXT," +
                 FavColumns.getDate() + " TEXT," +
                 FavColumns.getOverview() + " TEXT," +

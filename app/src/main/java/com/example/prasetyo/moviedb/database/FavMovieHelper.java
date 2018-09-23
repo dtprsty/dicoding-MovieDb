@@ -34,6 +34,7 @@ public class FavMovieHelper {
 
     private ContentValues movieContentValues(Movie movie) {
         ContentValues values = new ContentValues();
+        values.put(FavColumns.getId(), movie.getId());
         values.put(FavColumns.getTitle(), movie.getTitle());
         values.put(FavColumns.getDate(), movie.getDate());
         values.put(FavColumns.getOverview(), movie.getOverview());
@@ -47,13 +48,13 @@ public class FavMovieHelper {
     public int delete(String id) {
         return database.delete(
                 DatabaseConstruct.TABLE_FAVORITES,
-                FavColumns._ID + " = ?", new String[]{id}
+                FavColumns.getId() + " = ?", new String[]{id}
         );
     }
 
     public Cursor queryByIdProvider(String id){
         return database.query(DatabaseConstruct.TABLE_FAVORITES, null
-                ,FavColumns._ID + " = ?", new String[]{id}
+                ,FavColumns.getId() + " = ?", new String[]{id}
                 ,null
                 ,null
                 ,null
@@ -67,7 +68,7 @@ public class FavMovieHelper {
                 ,null
                 ,null
                 ,null
-                ,FavColumns._ID + " DESC");
+                ,FavColumns.getId() + " DESC");
     }
 
     public long insertProvider(ContentValues values){
@@ -80,7 +81,7 @@ public class FavMovieHelper {
         return database.update(
                 DatabaseConstruct.TABLE_FAVORITES,
                 movieContentValues(movie),
-                FavColumns._ID +" = ?",new String[]{id}
+                FavColumns.getId() +" = ?",new String[]{id}
         );
     }
 
@@ -88,14 +89,14 @@ public class FavMovieHelper {
         return database.update(
                 DatabaseConstruct.TABLE_FAVORITES,
                 values,
-                FavColumns._ID +" = ?",new String[]{id}
+                FavColumns.getId() +" = ?",new String[]{id}
         );
     }
 
     public int deleteProvider(String id){
         return database.delete(
                 DatabaseConstruct.TABLE_FAVORITES,
-                FavColumns._ID + " = ?", new String[]{id}
+                FavColumns.getId() + " = ?", new String[]{id}
         );
     }
 }

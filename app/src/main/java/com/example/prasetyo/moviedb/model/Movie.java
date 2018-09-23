@@ -6,9 +6,11 @@ import android.os.Parcelable;
 
 import static com.example.prasetyo.moviedb.database.DatabaseConstruct.getColumnString;
 import com.example.prasetyo.moviedb.database.DatabaseConstruct.FavColumns;
+import com.google.gson.Gson;
 
 public class Movie implements Parcelable{
 
+    private String id;
     private String title;
     private String date;
     private String poster;
@@ -18,6 +20,7 @@ public class Movie implements Parcelable{
     private String voter;
 
     protected Movie(Parcel in) {
+        id = in.readString();
         title = in.readString();
         date = in.readString();
         poster = in.readString();
@@ -40,6 +43,7 @@ public class Movie implements Parcelable{
     };
 
     public Movie(Cursor cursor){
+        this.id = getColumnString(cursor, FavColumns.getId());
         this.title = getColumnString(cursor, FavColumns.getTitle());
         this.date = getColumnString(cursor, FavColumns.getDate());
         this.overview= getColumnString(cursor, FavColumns.getOverview());
@@ -47,6 +51,19 @@ public class Movie implements Parcelable{
         this.poster= getColumnString(cursor, FavColumns.getPoster());
         this.rating= getColumnString(cursor, FavColumns.getRating());
         this.voter= getColumnString(cursor, FavColumns.getVoter());
+    }
+
+    public Movie(){
+
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getBanner() {
@@ -105,11 +122,16 @@ public class Movie implements Parcelable{
         this.poster = poster;
     }
 
+    public String parcelMovie() {
+        return new Gson().toJson(this);
+    }
+
     @Override public int describeContents() {
         return 0;
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(title);
         dest.writeString(date);
         dest.writeString(banner);
