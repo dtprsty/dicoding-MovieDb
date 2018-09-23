@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class FavoritesActivity extends AppCompatActivity {
 
-    private MovieAdapter movieAdapter;
+    private FavoriteAdapter favoriteAdapter;
     private ArrayList<Movie> itemList = new ArrayList<Movie>();
 
     private LinearLayoutManager layoutManager;
@@ -44,6 +44,13 @@ public class FavoritesActivity extends AppCompatActivity {
 
     private void init(){
         ButterKnife.bind(this);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Favorites Movie");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        showGridView();
     }
 
     private void showGridView() {
@@ -52,9 +59,8 @@ public class FavoritesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         // untuk mengisi data dari JSON ke dalam adapter
-        GridAdapter gridAdapter = new GridAdapter(this, itemList);
-        recyclerView.setAdapter(gridAdapter);
-        gridAdapter.notifyDataSetChanged();
+        favoriteAdapter = new FavoriteAdapter(this, null, true);
+        favoriteAdapter.notifyDataSetChanged();
     }
 
 }
