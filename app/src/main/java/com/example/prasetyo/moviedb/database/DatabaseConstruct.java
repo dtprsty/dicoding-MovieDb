@@ -66,7 +66,7 @@ public class DatabaseConstruct {
 
     public static String createTable() {
         return "CREATE TABLE " + TABLE_FAVORITES + " (" +
-                FavColumns.getId() + " TEXT PRIMARY KEY," +
+                FavColumns._ID + " TEXT PRIMARY KEY," +
                 FavColumns.getTitle() + " TEXT," +
                 FavColumns.getDate() + " TEXT," +
                 FavColumns.getOverview() + " TEXT," +
@@ -82,13 +82,5 @@ public class DatabaseConstruct {
 
     public static String getColumnString(Cursor cursor, String columnName) {
         return cursor.getString(cursor.getColumnIndex(columnName));
-    }
-
-    public static int getColumnInt(Cursor cursor, String columnName) {
-        return cursor.getInt(cursor.getColumnIndex(columnName));
-    }
-
-    public static long getColumnLong(Cursor cursor, String columnName) {
-        return cursor.getLong(cursor.getColumnIndex(columnName));
     }
 }

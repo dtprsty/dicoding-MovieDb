@@ -44,7 +44,7 @@ public class Movie implements Parcelable{
     };
 
     public Movie(Cursor cursor){
-        this.id = getColumnString(cursor, FavColumns.getId());
+        this.id = getColumnString(cursor, FavColumns._ID);
         this.title = getColumnString(cursor, FavColumns.getTitle());
         this.date = getColumnString(cursor, FavColumns.getDate());
         this.overview= getColumnString(cursor, FavColumns.getOverview());
