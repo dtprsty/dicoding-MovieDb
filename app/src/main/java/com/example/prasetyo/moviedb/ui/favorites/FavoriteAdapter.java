@@ -1,8 +1,10 @@
 package com.example.prasetyo.moviedb.ui.favorites;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
+import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.prasetyo.moviedb.R;
-
-import static com.example.prasetyo.moviedb.database.DatabaseConstruct.getColumnString;
-import com.example.prasetyo.moviedb.database.DatabaseConstruct.FavColumns;
+import com.example.prasetyo.moviedb.database.DatabaseConstruct;
 import com.example.prasetyo.moviedb.model.Movie;
-import com.example.prasetyo.moviedb.movie.GridAdapter;
-
-import java.util.ArrayList;
+import com.example.prasetyo.moviedb.ui.detail.DetailMovieActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +40,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         TextView txTitle;
         @BindView(R.id.txDate)
         TextView txDate;
+        @BindView(R.id.cardView)
+        CardView cardview;
 
         public ViewHolder(View v) {
             super(v);
@@ -59,12 +59,20 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
 
     @Override
-    public void onBindViewHolder(FavoriteAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(FavoriteAdapter.ViewHolder holder, final int position) {
         holder.txTitle.setText(getItem(position).getTitle());
         holder.txDate.setText(getItem(position).getDate());
         Glide.with(context)
                 .load(getItem(position).getPoster())
                 .into(holder.moviePoster);
+        holder.cardview.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), DetailMovieActivity.class);
+                Uri uri = Uri.parse(DatabaseConstruct.CONTENT_URI+"/"+getItem(position).getId());
+                i.setData(uri);
+                v.getContext().startActivity(i);
+            }
+        });
     }
 
     private Movie getItem(int position){

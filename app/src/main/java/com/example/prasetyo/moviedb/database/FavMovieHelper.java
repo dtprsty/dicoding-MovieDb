@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.prasetyo.moviedb.model.Movie;
 import com.example.prasetyo.moviedb.database.DatabaseConstruct.FavColumns;
+import com.example.prasetyo.moviedb.model.Movie;
 
 public class FavMovieHelper {
     private Context context;

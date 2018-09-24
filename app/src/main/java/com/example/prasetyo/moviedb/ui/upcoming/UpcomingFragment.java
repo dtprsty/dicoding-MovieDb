@@ -27,6 +27,7 @@ import com.example.prasetyo.moviedb.movie.MovieAdapter;
 import com.example.prasetyo.moviedb.movie.MoviePresenter;
 import com.example.prasetyo.moviedb.movie.MovieView;
 import com.example.prasetyo.moviedb.ui.detail.DetailMovieActivity;
+import com.example.prasetyo.moviedb.ui.favorites.FavoritesActivity;
 import com.example.prasetyo.moviedb.ui.search.SearchActivity;
 import com.example.prasetyo.moviedb.util.RecyclerItemClickListener;
 
@@ -98,8 +99,13 @@ public class UpcomingFragment extends Fragment implements MovieView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        Intent i;
         switch (item.getItemId()) {
+
+            case R.id.action_favorite:
+                i = new Intent(getActivity(), FavoritesActivity.class);
+                startActivity(i);
+                break;
 
             case R.id.action_grid:
                 showGridView();
@@ -110,7 +116,7 @@ public class UpcomingFragment extends Fragment implements MovieView {
                 break;
 
             case R.id.action_search:
-                Intent i = new Intent(getActivity(), SearchActivity.class);
+                i = new Intent(getActivity(), SearchActivity.class);
                 startActivity(i);
                 break;
 

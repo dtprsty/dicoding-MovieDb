@@ -4,9 +4,10 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import static com.example.prasetyo.moviedb.database.DatabaseConstruct.getColumnString;
 import com.example.prasetyo.moviedb.database.DatabaseConstruct.FavColumns;
 import com.google.gson.Gson;
+
+import static com.example.prasetyo.moviedb.database.DatabaseConstruct.getColumnString;
 
 public class Movie implements Parcelable{
 
