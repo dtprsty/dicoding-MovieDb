@@ -3,6 +3,7 @@ package com.example.prasetyo.moviedb.ui.favorites;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,37 +15,68 @@ import com.example.prasetyo.moviedb.R;
 
 import static com.example.prasetyo.moviedb.database.DatabaseConstruct.getColumnString;
 import com.example.prasetyo.moviedb.database.DatabaseConstruct.FavColumns;
+import com.example.prasetyo.moviedb.model.Movie;
+import com.example.prasetyo.moviedb.movie.GridAdapter;
 
-public class FavoriteAdapter extends CursorAdapter {
+import java.util.ArrayList;
 
-    public FavoriteAdapter(Context context, Cursor c, boolean autoRequery) {
-        super(context, c, autoRequery);
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
+
+    private Context context;
+    private Cursor list;
+
+    public FavoriteAdapter(Context context, Cursor list) {
+        this.context = context;
+        this.list = list;
     }
 
-    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.grid_movie_row, parent, false);
-        return view;
-    }
 
-    @Override
-    public Cursor getCursor() {
-        return super.getCursor();
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+        @BindView(R.id.imgPoster)
+        ImageView moviePoster;
+        @BindView(R.id.txTitle)
+        TextView txTitle;
+        @BindView(R.id.txDate)
+        TextView txDate;
 
-        if (cursor != null){
-            TextView txTitle = (TextView)view.findViewById(R.id.txTitle);
-            TextView txDate = (TextView)view.findViewById(R.id.txDate);
-            ImageView imgPoster = (ImageView)view.findViewById(R.id.imgPoster);
-
-            txTitle.setText(getColumnString(cursor,FavColumns.getTitle()));
-            txDate.setText(getColumnString(cursor,FavColumns.getDate()));
-            Glide.with(context)
-                    .load(FavColumns.getPoster())
-                    .into(imgPoster);
+        public ViewHolder(View v) {
+            super(v);
+            ButterKnife.bind(this, v);
         }
+    }
+
+    @Override
+    public FavoriteAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // membuat view baru
+        View v = LayoutInflater.from(context).inflate(R.layout.grid_movie_row, parent, false);
+        FavoriteAdapter.ViewHolder vh = new FavoriteAdapter.ViewHolder(v);
+        return vh;
+    }
+
+
+    @Override
+    public void onBindViewHolder(FavoriteAdapter.ViewHolder holder, int position) {
+        holder.txTitle.setText(getItem(position).getTitle());
+        holder.txDate.setText(getItem(position).getDate());
+        Glide.with(context)
+                .load(getItem(position).getPoster())
+                .into(holder.moviePoster);
+    }
+
+    private Movie getItem(int position){
+        if (!list.moveToPosition(position)) {
+            throw new IllegalStateException("Position invalid");
+        }
+        return new Movie(list);
+    }
+
+    @Override
+    public int getItemCount() {
+        if (list == null) return 0;
+        return list.getCount();
     }
 }

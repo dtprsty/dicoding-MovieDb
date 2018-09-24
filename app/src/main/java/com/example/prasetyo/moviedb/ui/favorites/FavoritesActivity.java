@@ -1,6 +1,7 @@
 package com.example.prasetyo.moviedb.ui.favorites;
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 public class FavoritesActivity extends AppCompatActivity {
 
     private FavoriteAdapter favoriteAdapter;
-    private ArrayList<Movie> itemList = new ArrayList<Movie>();
+    private Cursor itemList;
 
     private LinearLayoutManager layoutManager;
 
@@ -59,7 +60,7 @@ public class FavoritesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         // untuk mengisi data dari JSON ke dalam adapter
-        favoriteAdapter = new FavoriteAdapter(this, null, true);
+        favoriteAdapter = new FavoriteAdapter(this, itemList);
         favoriteAdapter.notifyDataSetChanged();
     }
 
