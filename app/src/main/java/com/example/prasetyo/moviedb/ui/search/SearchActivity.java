@@ -37,8 +37,6 @@ public class SearchActivity extends AppCompatActivity implements MovieView {
     private LinearLayoutManager layoutManager;
     private ProgressDialog pDialog;
 
-    private static final String STATE_PENCARIAN = "state_pencarian";
-
     @BindView(R.id.rootView)
     LinearLayout root;
     @BindView(R.id.listMovie)

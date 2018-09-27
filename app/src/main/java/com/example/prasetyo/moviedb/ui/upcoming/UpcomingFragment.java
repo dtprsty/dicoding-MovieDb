@@ -51,6 +51,9 @@ public class UpcomingFragment extends Fragment implements MovieView {
 
     Unbinder unbinder;
 
+    private boolean gridOn = false;
+    private Menu menu;
+
     @BindView(R.id.rootView)
     LinearLayout root;
     @BindView(R.id.listMovie)
@@ -94,6 +97,8 @@ public class UpcomingFragment extends Fragment implements MovieView {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
+        this.menu = menu;
+        setGrid();
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -108,11 +113,15 @@ public class UpcomingFragment extends Fragment implements MovieView {
                 break;
 
             case R.id.action_grid:
-                showGridView();
-                break;
-
-            case R.id.action_cardview:
-                initRecyclerView();
+                if(!gridOn) {
+                    menu.getItem(0).setIcon(R.drawable.ic_grid_on_white_24dp);
+                    gridOn = true;
+                    showGridView();
+                }else{
+                    menu.getItem(0).setIcon(R.drawable.ic_grid_off_white_24dp);
+                    gridOn = false;
+                    initRecyclerView();
+                }
                 break;
 
             case R.id.action_search:
@@ -126,6 +135,16 @@ public class UpcomingFragment extends Fragment implements MovieView {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setGrid() {
+        if (!gridOn) {
+            menu.getItem(0).setIcon(R.drawable.ic_grid_off_white_24dp);
+            initRecyclerView();
+        } else {
+            menu.getItem(0).setIcon(R.drawable.ic_grid_on_white_24dp);
+            showGridView();
+        }
     }
 
     @Override

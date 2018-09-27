@@ -49,6 +49,9 @@ public class NowPlayingFragment extends Fragment implements MovieView {
     private LinearLayoutManager layoutManager;
     private ProgressDialog pDialog;
 
+    private boolean gridOn = false;
+    private Menu menu;
+
     Unbinder unbinder;
 
     @BindView(R.id.rootView)
@@ -102,6 +105,8 @@ public class NowPlayingFragment extends Fragment implements MovieView {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
+        this.menu = menu;
+        setGrid();
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -114,13 +119,16 @@ public class NowPlayingFragment extends Fragment implements MovieView {
                 i = new Intent(getActivity(), FavoritesActivity.class);
                 startActivity(i);
                 break;
-
             case R.id.action_grid:
-                showGridView();
-                break;
-
-            case R.id.action_cardview:
-                initRecyclerView();
+                if(!gridOn) {
+                    menu.getItem(0).setIcon(R.drawable.ic_grid_on_white_24dp);
+                    gridOn = true;
+                    showGridView();
+                }else{
+                    menu.getItem(0).setIcon(R.drawable.ic_grid_off_white_24dp);
+                    gridOn = false;
+                    initRecyclerView();
+                }
                 break;
 
             case R.id.action_search:
@@ -134,6 +142,16 @@ public class NowPlayingFragment extends Fragment implements MovieView {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setGrid() {
+        if (!gridOn) {
+            menu.getItem(0).setIcon(R.drawable.ic_grid_off_white_24dp);
+            initRecyclerView();
+        } else {
+            menu.getItem(0).setIcon(R.drawable.ic_grid_on_white_24dp);
+            showGridView();
+        }
     }
 
 

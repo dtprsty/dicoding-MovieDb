@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieDb</string>
+    <string name="app_name">Movie Catalogue</string>
     <string name="cari">Search</string>
     <string name="release_date">Release Date</string>
     <string name="back">BACK</string>
@@ -13,5 +13,6 @@
     <string name="rating">Rating</string>
     <string name="voter">Voter</string>
     <string name="favorites">Favorites</string>
+    <string name="grid">grid</string>
 
 </resources>
