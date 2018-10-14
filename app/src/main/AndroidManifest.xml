@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.prasetyo.moviedb">
+    package="com.example.prasetyo.moviedb"
+    android:installLocation="preferExternal">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <permission android:name="com.example.prasetyo.moviedb.READ_DATABASE" android:protectionLevel="normal"/>
-    <permission android:name="com.example.prasetyo.moviedb.WRITE_DATABASE" android:protectionLevel="normal"/>
+    <permission
+        android:name="com.example.prasetyo.moviedb.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.example.prasetyo.moviedb.WRITE_DATABASE"
+        android:protectionLevel="normal" />
 
     <application
         android:name=".app.AppController"
@@ -26,15 +31,42 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.detail.DetailMovieActivity" />
-        <activity android:name=".ui.search.SearchActivity"></activity>
-        <activity android:name=".ui.favorites.FavoritesActivity"></activity>
+        <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.favorites.FavoritesActivity" />
 
         <provider
-            android:authorities="com.example.prasetyo.moviedb"
             android:name=".database.FavProvider"
+            android:authorities="com.example.prasetyo.moviedb"
             android:exported="true"
             android:readPermission="com.example.prasetyo.moviedb.READ_DATABASE"
             android:writePermission="com.example.prasetyo.moviedb.WRITE_DATABASE" />
+
+        <receiver android:name=".ui.widget.MovieWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/movie_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".service.MovieWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <activity android:name=".ui.setting.SettingActivity"
+            android:parentActivityName=".ui.main.MainActivity"></activity>
+
+        <receiver
+            android:name=".service.MovieUpcomingReminder"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".service.MovieDailyReminder"
+            android:enabled="true"
+            android:exported="false" />
 
     </application>
 

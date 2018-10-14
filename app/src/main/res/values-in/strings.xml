@@ -13,4 +13,25 @@
     <string name="rating">Rating</string>
     <string name="voter">Pemilih</string>
     <string name="favorites">Favorit</string>
+    <string name="grid">grid</string>
+    <string name="movie_not_found">Film tidak ditemukan</string>
+    <string name="popular">Populer</string>
+    <string name="other_movies">Film Lainnya</string>
+    <string name="movie_title">Judul Film</string>
+    <string name="daily_notification">Hi Silahkan lihat daftar film terkini</string>
+    <string name="upcoming_notification">%1s keluar!, klik disini</string>
+    <string name="change_language">Bahasa</string>
+    <string name="key_lang">key_lang</string>
+    <string name="key_today_reminder">key_today_reminder</string>
+    <string name="key_release_reminder">key_release_reminder</string>
+
+    <string name="pref_lang_title">Bahasa</string>
+    <string name="pref_summary_lang">Pilih bahasa</string>
+    <string name="pref_title_notifications">Notifikasi</string>
+
+    <string name="pref_daily_reminder">Daily Reminder</string>
+    <string name="pref_summary_daily_reminder">You will received daily reminder every 8 AM</string>
+
+    <string name="pref_summary_release_reminder">You will received daily new movie release info every 7 AM</string>
+    <string name="pref_release_reminder">New Release Reminder</string>
 </resources>

@@ -8,7 +8,6 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.prasetyo.moviedb.api.ApiEndPoint;
 import com.example.prasetyo.moviedb.model.Movie;
-import com.example.prasetyo.moviedb.ui.search.SearchActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +25,7 @@ public class MoviePresenter {
     private ArrayList<Movie> data = new ArrayList<Movie>();
 
 
-    private static final String TAG = SearchActivity.class.getSimpleName();
+    private static final String TAG = MoviePresenter.class.getSimpleName();
 
     public MoviePresenter(MovieView view, ApiEndPoint apiEndPoint) {
         this.apiEndPoint = apiEndPoint;
@@ -154,6 +153,64 @@ public class MoviePresenter {
         data.clear();
         view.showLoading();
         AndroidNetworking.get(apiEndPoint.urlUpcoming())
+                .setTag(this)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        Log.d(TAG, "RESULT " + response.toString());
+                        try {
+                            JSONArray array = response.getJSONArray("results");
+                            // Loop through the array elements
+                            for (int i = 0; i < array.length(); i++) {
+                                // Get current json object
+                                JSONObject jsonObject = array.getJSONObject(i);
+
+                                Movie movie = new Movie();
+
+                                movie.setId(jsonObject.getString("id"));
+                                movie.setTitle(jsonObject.getString("original_title"));
+                                movie.setOverview(jsonObject.getString("overview"));
+                                movie.setDate(parseDate(jsonObject.getString("release_date")));
+                                movie.setRating(jsonObject.getString("vote_average"));
+                                movie.setVoter(jsonObject.getString("vote_count"));
+                                movie.setPoster("http://image.tmdb.org/t/p/w185" + jsonObject.getString("poster_path"));
+                                movie.setBanner("http://image.tmdb.org/t/p/original" + jsonObject.getString("backdrop_path"));
+
+                                data.add(movie);
+
+                                view.getMovie(data);
+                                view.hideLoading();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if (data.isEmpty()) {
+                            view.showSnackbar("Movie Not Found");
+                        }
+                        view.getMovie(data);
+                        view.hideLoading();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        Log.e(TAG, "ERROR : " + error.getMessage());
+                        view.hideLoading();
+                    }
+                });
+
+
+    }
+
+    public void getPopularMovie() {
+
+        data.clear();
+        view.showLoading();
+        AndroidNetworking.get(apiEndPoint.urlPopular())
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()

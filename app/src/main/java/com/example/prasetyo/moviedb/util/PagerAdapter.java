@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.prasetyo.moviedb.ui.nowPlaying.NowPlayingFragment;
+import com.example.prasetyo.moviedb.ui.popular.PopularFragment;
 import com.example.prasetyo.moviedb.ui.upcoming.UpcomingFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
@@ -25,6 +26,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 NowPlayingFragment tab2 = new NowPlayingFragment();
                 return tab2;
+            case 2:
+                PopularFragment tab3 = new PopularFragment();
+                return tab3;
             default:
                 return null;
         }

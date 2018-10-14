@@ -14,5 +14,25 @@
     <string name="voter">Voter</string>
     <string name="favorites">Favorites</string>
     <string name="grid">grid</string>
+    <string name="movie_not_found">Movie Not Found</string>
+    <string name="popular">Popular</string>
+    <string name="other_movies">Other Movies</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="daily_notification">Hi long time no see, lets take some food and watch movie here!</string>
+    <string name="upcoming_notification">%1s release!, click here to read more.</string>
+    <string name="change_language">Language</string>
+    <string name="key_lang">key_lang</string>
+    <string name="key_today_reminder">key_today_reminder</string>
+    <string name="key_release_reminder">key_release_reminder</string>
+
+    <string name="pref_lang_title">Language</string>
+    <string name="pref_summary_lang">Choose Language</string>
+    <string name="pref_title_notifications">Notification</string>
+
+    <string name="pref_daily_reminder">Daily Reminder</string>
+    <string name="pref_summary_daily_reminder">You will received daily reminder every 8 AM</string>
+
+    <string name="pref_summary_release_reminder">You will received daily new movie release info every 7 AM</string>
+    <string name="pref_release_reminder">New Release Reminder</string>
 
 </resources>

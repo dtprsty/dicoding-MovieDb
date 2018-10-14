@@ -24,7 +24,7 @@
                 android:id="@+id/imgPoster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/img_placeholder"
                 android:adjustViewBounds="true"
                 android:scaleType="center"/>
 

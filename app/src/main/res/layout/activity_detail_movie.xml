@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@drawable/img_placeholder"/>
 
             <View
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    tools:text="Movie Title"
+                    tools:text="@string/movie_title"
                     android:id="@+id/txTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    tools:text="Date"
+                    tools:text="@string/release_date"
                     android:id="@+id/txDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

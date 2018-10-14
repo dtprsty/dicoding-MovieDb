@@ -13,6 +13,7 @@ import com.example.prasetyo.moviedb.R;
 import com.example.prasetyo.moviedb.model.Movie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +27,10 @@ public class MovieAdapter extends
     public MovieAdapter(Context context, ArrayList<Movie> list) {
         this.context = context;
         this.list = list;
+    }
+
+    public List<Movie> getMovies() {
+        return list;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

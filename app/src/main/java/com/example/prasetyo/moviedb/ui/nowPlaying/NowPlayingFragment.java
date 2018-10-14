@@ -4,7 +4,7 @@ package com.example.prasetyo.moviedb.ui.nowPlaying;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -29,6 +29,7 @@ import com.example.prasetyo.moviedb.movie.MovieView;
 import com.example.prasetyo.moviedb.ui.detail.DetailMovieActivity;
 import com.example.prasetyo.moviedb.ui.favorites.FavoritesActivity;
 import com.example.prasetyo.moviedb.ui.search.SearchActivity;
+import com.example.prasetyo.moviedb.ui.setting.SettingActivity;
 import com.example.prasetyo.moviedb.util.RecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -68,10 +69,6 @@ public class NowPlayingFragment extends Fragment implements MovieView {
         ApiEndPoint apiEndPoint = new ApiEndPoint();
         presenter = new MoviePresenter(this, apiEndPoint);
         recyclerView.setHasFixedSize(true);
-        pDialog = new ProgressDialog(getActivity());
-        pDialog.setMessage("Loading...");
-        presenter.getMovieNowPlaying();
-        initRecyclerView();
     }
 
 
@@ -85,6 +82,15 @@ public class NowPlayingFragment extends Fragment implements MovieView {
         unbinder = ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
         init();
+        if (savedInstanceState != null) {
+            itemList = savedInstanceState.getParcelableArrayList("movies");
+        } else {
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Loading...");
+            presenter.getPopularMovie();
+        }
+
+        initRecyclerView();
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -137,8 +143,8 @@ public class NowPlayingFragment extends Fragment implements MovieView {
                 break;
 
             case R.id.action_setting:
-                Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-                startActivity(mIntent);
+                i = new Intent(getActivity(), SettingActivity.class);
+                startActivity(i);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -210,5 +216,11 @@ public class NowPlayingFragment extends Fragment implements MovieView {
         itemList.clear();
         itemList.addAll(data);
         movieAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("movies", new ArrayList<>(movieAdapter.getMovies()));
     }
 }

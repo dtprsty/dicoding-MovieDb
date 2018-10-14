@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabs.addTab(tabs.newTab().setText(R.string.upcoming));
         tabs.addTab(tabs.newTab().setText(R.string.nowplaying));
+        tabs.addTab(tabs.newTab().setText(R.string.popular));
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final PagerAdapter adapter = new PagerAdapter
