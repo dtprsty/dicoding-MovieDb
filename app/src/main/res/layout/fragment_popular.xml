@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.daimajia.slider.library.SliderLayout
+            android:layout_centerInParent="true"
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            custom:indicator_visibility="visible"
+            custom:pager_animation_span="1100"
+            android:layout_height="160dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/other_movies"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:layout_margin="16dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listMovie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/list_movie_row"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
